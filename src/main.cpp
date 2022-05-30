@@ -12,13 +12,13 @@ std::unordered_set<std::string> files;
 int main()
 {
     int errorp;
-    zip_t *zipper = zip_open("final_5.zip", 16, &errorp);
+    zip_t *zipper = zip_open("final_5.zip", 16, &errorp); // NO ERROR TEST, TAXONOMY FILE ZIP OPEN
     int num = zip_get_num_files(zipper);
     zip_flags_t zf;
     for(int i = 0; i<num; i++)
         files.insert(std::string(zip_get_name(zipper, i, zf)));
 
-    zip_file_t * fl = zip_fopen(zipper, "final_5/META-INF/entry_point.xml", zf);
+    zip_file_t * fl = zip_fopen(zipper, "final_5/META-INF/entry_point.xml", zf); // NO ERROR TEST, GLOBAL EP FILE EXTRACT AND READ
     char* buf = new char[10000]{0};
     int rd = {0};
     int b = {0};
