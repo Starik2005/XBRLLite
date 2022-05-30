@@ -1,6 +1,6 @@
-//////////////////////////////////////*
-* THIS CODE FOR READING TAXONOMY ONLY *
-*//////////////////////////////////////
+/////////////////////////////////////////
+// THIS CODE FOR READING TAXONOMY ONLY //
+/////////////////////////////////////////
 
 #include <iostream>
 #include <zip.h>
@@ -31,7 +31,6 @@ int main()
              if (otag)
                  if (buf[b]=='>'||buf[b]==' '||buf[b]=='/') {
                      otag = 0;
-                     t = 0;
                      if(buf[b]=='>') {oname=1; b++; std::cout << " DATA: "; continue; }
                      } else std::cout << buf[b];
              if(buf[b]=='<') {
@@ -39,7 +38,6 @@ int main()
                      std::cout << '\n' << "TAG: ";
                      if (oname) {
                          oname = 0;
-                         d = 0;
                      }
                  }
             if(oname)std::cout << buf[b];
