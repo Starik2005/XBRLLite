@@ -1,3 +1,7 @@
+//////////////////////////////////////*
+* THIS CODE FOR READING TAXONOMY ONLY *
+*//////////////////////////////////////
+
 #include <iostream>
 #include <zip.h>
 #include <unordered_set>
