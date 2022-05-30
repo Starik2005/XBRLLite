@@ -1,7 +1,7 @@
 # XBRLLite
 XBRL lite processor pet project
 
-This C++ PET project
+This C++ PET project (I'm still learning)
 
 1. Create reader for taxonomy:
 
