@@ -1,7 +1,3 @@
-/////////////////////////////////////////
-// THIS CODE FOR READING TAXONOMY ONLY //
-/////////////////////////////////////////
-
 #include <iostream>
 #include <zip.h>
 #include <unordered_set>
@@ -12,43 +8,53 @@ std::unordered_set<std::string> files;
 int main()
 {
     int errorp;
-    zip_t *zipper = zip_open("final_5.zip", 16, &errorp); // NO ERROR TEST, TAXONOMY FILE ZIP OPEN
+    zip_t *zipper = zip_open("final_5.zip", 16, &errorp);
     int num = zip_get_num_files(zipper);
     zip_flags_t zf;
     for(int i = 0; i<num; i++)
         files.insert(std::string(zip_get_name(zipper, i, zf)));
 
-    zip_file_t * fl = zip_fopen(zipper, "final_5/META-INF/entry_point.xml", zf); // NO ERROR TEST, GLOBAL EP FILE EXTRACT AND READ
-    char* buf = new char[10000]{0};
-    int rd = {0};
-    int b = {0};
-    bool otag = 0;
-    bool oname = 0;
-    while(rd = zip_fread(fl, buf, 10000))
+    zip_file_t * fl = zip_fopen(zipper, "final_5/META-INF/entry_point.xml", zf);
+    char buf[256]{0};
+    char tagName[10000]{0};
+    char data[10000]{0};
+    int rd,ti,di,rd0 = {0};
+    bool otag,oname = 0;
+    char x;
+
+    while(rd = zip_fread(fl, buf, 256))
     {
-       b = 0;
-       for(; rd>0; rd--){
-             if (otag)
-                 if (buf[b]=='>'||buf[b]==' '||buf[b]=='/') {
-                     otag = 0;
-                     if(buf[b]=='>') {oname=1; b++; std::cout << " DATA: "; continue; }
-                     } else std::cout << buf[b];
-             if(buf[b]=='<') {
-                     otag = 1;
-                     std::cout << '\n' << "TAG: ";
-                     if (oname) {
-                         oname = 0;
-                     }
-                 }
-            if(oname)std::cout << buf[b];
-            b++;
+        rd0 = 0;
+        while(rd--){
+            x = buf[rd0++];
+            if (otag)
+                if (x=='>'||x==' '||x=='/') {
+                    otag = 0;
+                    tagName[ti++] = 0;
+                    if (ti>1)
+                        std::cout << tagName;
+                    ti = 0;
+                    if(x=='>'){oname=1; continue;}
+                } else tagName[ti++] = x;
+            if(x=='<') {
+                    otag = 1;
+                    if (oname) {
+                        oname = 0;
+                        data[di++] = 0;
+                        if (di>1)
+                            std::cout  << " = \"" << data << "\"\n";
+                        di = 0;
+                    }
+                }
+            if(oname) data[di++] = x;
         }
     }
 
     zip_close(zipper);
 
     std::cout << '\n';
-    std::cout << num << '\n';
 
- return 0;
+    std::cout << num << '\n';
+ return 0; 
 }
+
