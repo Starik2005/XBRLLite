@@ -5,11 +5,11 @@ This C++ PET project (I'm still learning)
 
 1. Create reader for taxonomy:
 
-1.1. To do read taxonomy zip file - in progress...
+1.1. To do read taxonomy zip file - in progress... done, for refactoring.
 
-1.2. To do read META-INF
+1.2. To do read META-INF - done for EP.
 
-1.3. To do read entry point (EP)
+1.3. To do read entry point (EP) - in progress...
 
 1.4. To do read definition layer
 
